@@ -7,13 +7,68 @@
  */
 
 import React, {Component} from 'react';
+import {View, StyleSheet, Text, ActivityIndicator} from 'react-native';
 import Login from './Login';
+import AuthService from './AuthService';
 
 type Props = {};
 export default class App extends Component<Props> {
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      isLoggedIn: false,
+      checkingAuth: true
+    };
+  }
+
+  componentDidMount() {
+    AuthService.getAuthInfo((err, authInfo)=>{
+      this.setState({
+        checkingAuth: false,
+        isLoggedIn: authInfo != null
+      })
+    });
+  }
+
+  onLogin() {
+    this.setState({isLoggedIn: true});
+  }
+
   render() {
-    return (
-      <Login/>
-    );
+    const {isLoggedIn, checkingAuth} = this.state;
+    if(checkingAuth) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator
+            animating={true}
+            size="large"
+            style={styles.loader}/>
+        </View>
+      )
+    }
+    if(isLoggedIn){
+      return (
+        <View style={styles.container}>
+          <Text style={styles.welcome}>Logged in!</Text>
+        </View>
+      )
+    } else {
+      return (
+        <Login onLogin={()=>this.onLogin()}/>
+      );
+    }
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  welcome: {
+
+  }
+});
