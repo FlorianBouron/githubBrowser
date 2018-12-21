@@ -9,6 +9,7 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, ActivityIndicator} from 'react-native';
 import Login from './Login';
+import AppContainer from './AppContainer';
 import AuthService from './AuthService';
 
 type Props = {};
@@ -50,9 +51,7 @@ export default class App extends Component<Props> {
     }
     if(isLoggedIn){
       return (
-        <View style={styles.container}>
-          <Text style={styles.welcome}>Logged in!</Text>
-        </View>
+        <AppContainer/>
       )
     } else {
       return (
@@ -66,9 +65,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
-  },
-  welcome: {
-
+    justifyContent: 'center',
+    backgroundColor: '#F5FCFF'
   }
 });
