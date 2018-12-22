@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, ActivityIndicator} from 'react-native';
 import Login from './Login';
 import AppContainer from './AppContainer';
 import AuthService from './AuthService';

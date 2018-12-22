@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, TabBarIOS} from 'react-native';
+import Feed from './Feed';
 
 export default class AppContainer extends Component {
 
@@ -18,12 +19,9 @@ export default class AppContainer extends Component {
           title="Feed"
           selected={this.state.selectedTab === 'feed'}
           icon={require('./img/inbox.png')}
-          onPress={()=>this.setState({selectedTab: 'feed'})}>
-          <View style={styles.container}>
-            <Text style={styles.welcome}>
-              Tab 1
-            </Text>
-          </View>
+          onPress={()=>this.setState({selectedTab: 'feed'})}
+        >
+          <Feed />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           title="Search"
