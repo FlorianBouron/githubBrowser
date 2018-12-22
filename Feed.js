@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import moment from 'moment';
-import {View, Text, StyleSheet, FlatList, ActivityIndicator, Image} from 'react-native';
+import {View, Text, StyleSheet, FlatList, ActivityIndicator, Image,
+  TouchableHighlight} from 'react-native';
 import {getAuthInfo} from './AuthService';
+import DetailView from "./DetailView";
 
 
 export default class Feed extends Component {
@@ -35,29 +37,44 @@ export default class Feed extends Component {
     });
   }
 
+  pressRow(rowData){
+    this.props.navigator.push({
+      title: "Detail View",
+      component: DetailView,
+      passProps: {
+        pushEvent: rowData
+      }
+    });
+  }
+
   renderRow(rowData){
     const {item} = rowData;
     return (
-      <View style={styles.row}>
-        <Image
-          source={{uri: item.actor.avatar_url}}
-          style={{
-            height: 36,
-            width: 36,
-            borderRadius: 18
-          }}
-        />
-        <View style={{
-          paddingLeft: 20
-        }}>
-          <Text>
-            {moment(item.created_at).fromNow()}
-          </Text>
-          <Text>
-            {item.actor.login}
-          </Text>
+      <TouchableHighlight
+        onPress={()=>this.pressRow(rowData)}
+        underlayColor='#DDD'
+      >
+        <View style={styles.row}>
+          <Image
+            source={{uri: item.actor.avatar_url}}
+            style={{
+              height: 36,
+              width: 36,
+              borderRadius: 18
+            }}
+          />
+          <View style={{
+            paddingLeft: 20
+          }}>
+            <Text>
+              {moment(item.created_at).fromNow()}
+            </Text>
+            <Text>
+              {item.actor.login}
+            </Text>
+          </View>
         </View>
-      </View>
+      </TouchableHighlight>
     )
   }
 
@@ -76,7 +93,7 @@ export default class Feed extends Component {
       <View style={styles.container}>
         <FlatList
           data={dataSource}
-          renderItem={this.renderRow}
+          renderItem={this.renderRow.bind(this)}
           keyExtractor={(item) => item.id}/>
       </View>
     )
@@ -88,7 +105,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'stretch',
+    marginTop: 10
   },
   row: {
     flex: 1,
