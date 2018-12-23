@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, TabBarIOS, NavigatorIOS} from 'react-native';
+import {StyleSheet, TabBarIOS, NavigatorIOS} from 'react-native';
 import Feed from './Feed';
+import Search from './Search';
 
 export default class AppContainer extends Component {
 
@@ -34,12 +35,16 @@ export default class AppContainer extends Component {
           title="Search"
           selected={this.state.selectedTab === 'search'}
           icon={require('./img/search.png')}
-          onPress={()=>this.setState({selectedTab: 'search'})}>
-          <View style={styles.container}>
-            <Text style={styles.welcome}>
-              Tab 2
-            </Text>
-          </View>
+          onPress={()=>this.setState({selectedTab: 'search'})}
+        >
+          <NavigatorIOS
+            style={{
+              flex: 1
+            }}
+            initialRoute={{
+              component: Search,
+              title: "Search"
+            }}/>
         </TabBarIOS.Item>
       </TabBarIOS>
     )
@@ -52,10 +57,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#F5FCFF'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10
   }
 });
